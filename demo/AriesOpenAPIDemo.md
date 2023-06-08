@@ -1,6 +1,6 @@
-# Aries OpenAPI Demo <!-- omit in toc -->
+# FlexID OpenAPI Demo <!-- omit in toc -->
 
-What better way to learn about controllers than by actually being one yourself! In this demo, that’s just what happens&mdash;you are the controller. You have access to the full set of API endpoints exposed by an ACA-Py instance, and you will see the events coming from ACA-Py as they happen. Using that information, you'll help Alice's and Faber's agents connect, Faber's agent issue an education credential to Alice, and then ask Alice to prove she possesses the credential. Who knows why Faber needs to get the proof, but it lets us show off more protocols.
+What better way to learn about controllers than by actually being one yourself! In this demo, that’s just what happens&mdash;you are the controller. You have access to the full set of API endpoints exposed by an FlexID instance, and you will see the events coming from FlexID as they happen. Using that information, you'll help Alice's and Faber's agents connect, Faber's agent issue an education credential to Alice, and then ask Alice to prove she possesses the credential. Who knows why Faber needs to get the proof, but it lets us show off more protocols.
 
 # Contents <!-- omit in toc -->
 
@@ -49,15 +49,15 @@ What better way to learn about controllers than by actually being one yourself! 
 
 We will get started by opening three browser tabs that will be used throughout the lab. Two will be Swagger UIs for the Faber and Alice agent and one for the public ledger (showing the Hyperledger Indy ledger). As well, we'll keep the terminal sessions where we started the demos handy, as we'll be grabbing information from them as well.
 
-Let's start with the ledger browser. For this demo, we're going to use an open public ledger operated by the BC Government's VON Team. In your first browser tab, go to: [http://dev.greenlight.bcovrin.vonx.io](http://dev.greenlight.bcovrin.vonx.io). This will be called the "ledger tab" in the instructions below.
+Let's start with the ledger browser. For this demo, we're going to use our public ledger. In your first browser tab, go to: [https://ledger.flexid.africa/](https://ledger.flexid.africa/). This will be called the "ledger tab" in the instructions below.
 
 For the rest of the set up, you can choose to run the terminal sessions in your browser (no local resources needed), or you can run it in Docker on your local system. Your choice, each is covered in the next two sections.
 
-> Note: In the following, when we start the agents we use several special demo settings. The command we use is this: `LEDGER_URL=http://dev.greenlight.bcovrin.vonx.io ./run_demo faber --events --no-auto --bg`. In that:
+> Note: In the following, when we start the agents we use several special demo settings. The command we use is this: `LEDGER_URL=https://ledger.flexid.africa/ ./run_demo faber --events --no-auto --bg`. In that:
 > 
 > - The `LEDGER_URL` environment variable informs the agent what ledger to use.
-> - The `--events` option indicates that we want the controller to display the webhook events from ACA-Py in the log displayed on the terminal.
-> - The `--no-auto` option indicates that we don't want the ACA-Py agent to automatically handle some events such as connecting. We want the controller (you!) to handle each step of the protocol.
+> - The `--events` option indicates that we want the controller to display the webhook events from FlexID in the log displayed on the terminal.
+> - The `--no-auto` option indicates that we don't want the FlexID agent to automatically handle some events such as connecting. We want the controller (you!) to handle each step of the protocol.
 > - The `--bg` option indicates that the docker container will run in the background, so accidentally hitting Ctrl-C won't stop the process.
 
 ## Running in a Browser
@@ -69,9 +69,9 @@ To run the necessary terminal sessions in your browser, go to the Docker playgro
 In a browser, go to the [Play with Docker](https://labs.play-with-docker.com/) home page, Login (if necessary) and click "Start." On the next screen, click (in the left menu) "+Add a new instance."  That will start up a terminal in your browser. Run the following commands to start the Faber agent.
 
 ```bash
-git clone https://github.com/hyperledger/aries-cloudagent-python
-cd aries-cloudagent-python/demo
-LEDGER_URL=http://dev.greenlight.bcovrin.vonx.io ./run_demo faber --events --no-auto --bg
+git clone https://github.com/ssidwallet/flexid_py
+cd flex_py/demo
+LEDGER_URL=https://ledger.flexid.africa/ ./run_demo faber --events --no-auto --bg
 
 ```
 
@@ -97,9 +97,9 @@ Once the Faber agent has started up (with the invite displayed), click the link 
 Now to start Alice's agent. Click the "+Add a new instance" button again to open another terminal session. Run the following commands to start Alice's agent:
 
 ```bash
-git clone https://github.com/hyperledger/aries-cloudagent-python
-cd aries-cloudagent-python/demo
-LEDGER_URL=http://dev.greenlight.bcovrin.vonx.io ./run_demo alice --events --no-auto --bg
+git clone https://github.com/ssidwallet/flexid_py
+cd flex_py/demo
+LEDGER_URL=https://ledger.flexid.africa/ ./run_demo alice --events --no-auto --bg
 
 ```
 
@@ -132,12 +132,12 @@ To run the demo on your local system, you must have git, a running Docker instal
 
 To begin running the demo in Docker, open up two terminal windows, one each for Faber’s and Alice’s agent.
 
-In the first terminal window, clone the ACA-Py repo, change into the demo folder and start the Faber agent:
+In the first terminal window, clone the FlexID repo, change into the demo folder and start the Faber agent:
 
 ```bash
-git clone https://github.com/hyperledger/aries-cloudagent-python
-cd aries-cloudagent-python/demo
-LEDGER_URL=http://dev.greenlight.bcovrin.vonx.io ./run_demo faber --events --no-auto --bg
+git clone https://github.com/ssidwallet/flexid_py
+cd flex_py/demo
+LEDGER_URL=https://ledger.flexid.africa/ ./run_demo faber --events --no-auto --bg
 
 ```
 
@@ -163,7 +163,7 @@ If all goes well, the agent will show a message indicating it is running. Use th
 To start Alice's agent, open up a second terminal window and in it, change to the same `demo` directory as where Faber's agent was started above. Once there, start Alice's agent:
 
 ``` bash
-LEDGER_URL=http://dev.greenlight.bcovrin.vonx.io ./run_demo alice --events --no-auto --bg
+LEDGER_URL=https://ledger.flexid.africa/ ./run_demo alice --events --no-auto --bg
 
 ```
 
@@ -198,7 +198,7 @@ docker stop alice
 
 ## Using the OpenAPI/Swagger User Interface
 
-Try to organize what you see on your screen to include both the Alice and Faber OpenAPI/Swagger tabs, and both (Alice and Faber) terminal sessions, all at the same time. After you execute an API call in one of the browser tabs, you will see a webhook event from the ACA-Py instance in the terminal window of the other agent. That's a controller's life. See an event, process it, send a response.
+Try to organize what you see on your screen to include both the Alice and Faber OpenAPI/Swagger tabs, and both (Alice and Faber) terminal sessions, all at the same time. After you execute an API call in one of the browser tabs, you will see a webhook event from the FlexID instance in the terminal window of the other agent. That's a controller's life. See an event, process it, send a response.
 
 From time to time you will want to see what's happening on the ledger, so keep that handy as well. As well, if you make an error with one of the commands (e.g. bad data, improperly structured JSON), you will see the errors in the terminals.
 
@@ -280,7 +280,7 @@ At this point Alice has simply stored the invitation in her wallet. You can see 
     <img src="./collateral/2-Alice-Invitation-3.png" alt="Invitation Status">
 </details>
 
-To complete a connection with Faber, she must accept the invitation and send a corresponding connection request to Faber. Find the `connection_id` in the connection response from the previous **`POST /connections/receive-invitation`** endpoint call. You may note that the same data was sent to the controller as an event from ACA-Py and is visible in the terminal. Scroll to the **`POST /connections/{conn_id}/accept-invitation`** endpoint and paste the `connection_id` in the `id` parameter field (you will have to click the `Try it out` button to see the available URL parameters). The response from clicking `Execute` should show that the connection has a state of `request`.
+To complete a connection with Faber, she must accept the invitation and send a corresponding connection request to Faber. Find the `connection_id` in the connection response from the previous **`POST /connections/receive-invitation`** endpoint call. You may note that the same data was sent to the controller as an event from FlexID and is visible in the terminal. Scroll to the **`POST /connections/{conn_id}/accept-invitation`** endpoint and paste the `connection_id` in the `id` parameter field (you will have to click the `Try it out` button to see the available URL parameters). The response from clicking `Execute` should show that the connection has a state of `request`.
 
 <details>
     <summary>Show me a screenshot - Accept Invitation Request</summary>
@@ -294,7 +294,7 @@ To complete a connection with Faber, she must accept the invitation and send a c
 
 ### The Faber Agent Gets the Request
 
-In the Faber terminal session, an event (a web service callback from ACA-Py to the controller) has been received about the request from Alice. Copy the `connection_id` from the event for the next step.
+In the Faber terminal session, an event (a web service callback from FlexID to the controller) has been received about the request from Alice. Copy the `connection_id` from the event for the next step.
 
 <details>
     <summary>Show me the event</summary>
@@ -346,7 +346,7 @@ You are connected! Switch to the Faber browser tab and run the same **`GET /conn
 
 ## Basic Messaging Between Agents
 
-Once you have a connection between two agents, you have a channel to exchange secure, encrypted messages. In fact these underlying encrypted messages (similar to envelopes in a postal system) enable the delivery of messages that form the higher level protocols, such as issuing Credentials and providing Proofs. So, let's send a couple of messages that contain the simplest of context&mdash;text. For this we wil use the Basic Message protocol, [Aries RFC 0095](https://github.com/hyperledger/aries-rfcs/tree/master/features/0095-basic-message).
+Once you have a connection between two agents, you have a channel to exchange secure, encrypted messages. In fact these underlying encrypted messages (similar to envelopes in a postal system) enable the delivery of messages that form the higher level protocols, such as issuing Credentials and providing Proofs. So, let's send a couple of messages that contain the simplest of context&mdash;text. For this we wil use the Basic Message protocol, [FlexID RFC 0095](https://github.com/hyperledger/aries-rfcs/tree/master/features/0095-basic-message).
 
 ### Sending a message from Alice to Faber
 
@@ -404,7 +404,7 @@ You can confirm the schema and credential definition were published by going bac
     <img src="./collateral/C-1-Faber-DID-Public.png" alt="Faber Public DID">
 </details>
 
-On the ledger browser of the [BCovrin ledger](http://dev.greenlight.bcovrin.vonx.io), click the `Domain` page, refresh, and paste the Faber public DID into the `Filter:` field:
+On the ledger browser of the [BCovrin ledger](https://ledger.flexid.africa/), click the `Domain` page, refresh, and paste the Faber public DID into the `Filter:` field:
 
 <details>
     <summary>Show me a screenshot</summary>
@@ -478,7 +478,7 @@ Finally, set the remaining values as follows:
 - `comment`: set to any string. It's intended to let Alice know something about the credential being offered.
 - `trace`: set to `false` (no quotes). It's for troubleshooting, performance profiling, and/or diagnostics.
 
-By setting `auto_remove` to true, ACA-Py will automatically remove the credential exchange record after the protocol completes. When implementing a controller, this is the likely setting to use to reduce agent storage usage, but implies if a record of the issuance of the credential is needed, the controller must save it somewhere else. For example, Faber College might extend their Student Information System, where they track all their students, to record when credentials are issued to students, and the Ids of the issued credentials.
+By setting `auto_remove` to true, FlexID will automatically remove the credential exchange record after the protocol completes. When implementing a controller, this is the likely setting to use to reduce agent storage usage, but implies if a record of the issuance of the credential is needed, the controller must save it somewhere else. For example, Faber College might extend their Student Information System, where they track all their students, to record when credentials are issued to students, and the Ids of the issued credentials.
 
 ### Faber - Issuing the Credential
 
@@ -523,7 +523,7 @@ To confirm the issuance worked, scroll up on the Faber Swagger page to the `issu
 
 Let’s look at it from Alice’s side. Alice's agent source code automatically handles credential offers by immediately responding with a credential request. Scroll back in the Alice terminal to where the credential issuance started. If you've followed the full script, that is just after where we used the basic message protocol to send text messages between Alice and Faber.
 
-Alice's agent first received a notification of a Credential Offer, to which it responded with a Credential Request. Faber received the Credential Request and responded in turn with an Issue Credential message. Scroll down through the events from ACA-Py to the controller to see the notifications of those messages. Make sure you scroll all the way to the bottom of the terminal so you can continue with the process.
+Alice's agent first received a notification of a Credential Offer, to which it responded with a Credential Request. Faber received the Credential Request and responded in turn with an Issue Credential message. Scroll down through the events from FlexID to the controller to see the notifications of those messages. Make sure you scroll all the way to the bottom of the terminal so you can continue with the process.
 
 <details>
     <summary>Show me a screenshot - issue credential</summary>
@@ -540,7 +540,7 @@ We can check (via Alice's Swagger interface) the issue credential status by hitt
     <img src="./collateral/C-7-Alice-Store-Credential-2.png" alt="">
 </details>
 
-First, we need the `cred_ex_id` from the API call response above, or from the event in the terminal; use the endpoint **`POST /issue-credential-2.0/records/{cred_ex_id}/store`** to tell Alice's ACA-Py instance to store the credential in agent storage (aka the Indy Wallet). Note that in the JSON for that endpoint we can provide a credential Id to store in the wallet by setting a value in the `credential_id` string. A real controller might use the `cred_ex_id` for that, or use something else that makes sense in the agent's business scenario (but the agent generates a random credential identifier by default).
+First, we need the `cred_ex_id` from the API call response above, or from the event in the terminal; use the endpoint **`POST /issue-credential-2.0/records/{cred_ex_id}/store`** to tell Alice's FlexID instance to store the credential in agent storage (aka the Indy Wallet). Note that in the JSON for that endpoint we can provide a credential Id to store in the wallet by setting a value in the `credential_id` string. A real controller might use the `cred_ex_id` for that, or use something else that makes sense in the agent's business scenario (but the agent generates a random credential identifier by default).
 
 <details>
     <summary>Show me a screenshot - store credential</summary>
@@ -548,7 +548,7 @@ First, we need the `cred_ex_id` from the API call response above, or from the ev
     <img src="./collateral/C-7-Alice-Store-Credential-4.png" alt="">
 </details>
 
-Now, in Alice’s swagger browser tab, find the `credentials` section and within that, execute the **`GET /credentials`** endpoint. There should be a list of credentials held by Alice, with just a single entry, the credential issued from the Faber agent. Note that the element `referent` is the value of the `credential_id` element used in other calls. `referent` is the name returned in the `indy-sdk` call to get the set of credentials for the wallet and ACA-Py code does not change it in the response.
+Now, in Alice’s swagger browser tab, find the `credentials` section and within that, execute the **`GET /credentials`** endpoint. There should be a list of credentials held by Alice, with just a single entry, the credential issued from the Faber agent. Note that the element `referent` is the value of the `credential_id` element used in other calls. `referent` is the name returned in the `indy-sdk` call to get the set of credentials for the wallet and FlexID code does not change it in the response.
 
 ### Faber Receives Acknowledgment that the Credential was Received
 
@@ -669,7 +669,7 @@ Notice that the proof request is using a predicate to check if Alice is older th
 
 ### Alice - Responding to the Proof Request
 
-As before, Alice receives a webhook event from her agent telling her she has received a Proof Request. In our scenario, the ACA-Py instance automatically selects a matching credential and responds with a Proof.
+As before, Alice receives a webhook event from her agent telling her she has received a Proof Request. In our scenario, the FlexID instance automatically selects a matching credential and responds with a Proof.
 
 <details>
     <summary>Show me Alice's event activity</summary>
@@ -715,7 +715,7 @@ The following table lists endpoints that you need to call ("REST service") and c
 
 ## Conclusion
 
-That’s the OpenAPI-based tutorial. Feel free to play with the API and learn how it works. More importantly, as you implement a controller, use the OpenAPI user interface to test out the calls you will be using as you go. The list of API calls is grouped by protocol and if you are familiar with the protocols (Aries RFCs) the API call names should be pretty obvious.
+That’s the OpenAPI-based tutorial. Feel free to play with the API and learn how it works. More importantly, as you implement a controller, use the OpenAPI user interface to test out the calls you will be using as you go. The list of API calls is grouped by protocol and if you are familiar with the protocols (FlexID RFCs) the API call names should be pretty obvious.
 
 One limitation of you being the controller is that you don't see the events from the agent that a controller program sees. For example, you, as Alice's agent, are not notified when Faber initiates the sending of a Credential. Some of those things show up in the terminal as messages, but others you just have to know have happened based on a successful API call.
 
