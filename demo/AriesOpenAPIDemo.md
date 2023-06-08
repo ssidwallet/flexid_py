@@ -70,7 +70,7 @@ In a browser, go to the [Play with Docker](https://labs.play-with-docker.com/) h
 
 ```bash
 git clone https://github.com/ssidwallet/flexid_py
-cd flex_py/demo
+cd flexid_py/demo
 LEDGER_URL=https://ledger.flexid.africa/ ./run_demo faber --events --no-auto --bg
 
 ```
@@ -98,7 +98,7 @@ Now to start Alice's agent. Click the "+Add a new instance" button again to open
 
 ```bash
 git clone https://github.com/ssidwallet/flexid_py
-cd flex_py/demo
+cd flexid_py/demo
 LEDGER_URL=https://ledger.flexid.africa/ ./run_demo alice --events --no-auto --bg
 
 ```
@@ -136,7 +136,7 @@ In the first terminal window, clone the FlexID repo, change into the demo folder
 
 ```bash
 git clone https://github.com/ssidwallet/flexid_py
-cd flex_py/demo
+cd flexid_py/demo
 LEDGER_URL=https://ledger.flexid.africa/ ./run_demo faber --events --no-auto --bg
 
 ```
